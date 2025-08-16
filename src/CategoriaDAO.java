@@ -1,21 +1,20 @@
 import java.sql.*;
 import java.util.*;
 
-public class ProdutoDAO{
-
+public class CategoriaDAO {
     @SuppressWarnings("CallToPrintStackTrace")
-    public void inserir(Produto p) {
+    public void inserir(Categoria c) {
 
-        String sql = "INSERT INTO produtos (nome, preco) VALUES (?, ?)";
+        String sql = "INSERT INTO categorias (nome, ativo) VALUES (?, ?)";
         
         try (Connection conn = Conexao.conectar();
         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, p.getNome());
-            stmt.setDouble(2, p.getPreco());
+            stmt.setString(1, c.getNome());
+            stmt.setBoolean(2, c.getAtivo());
             stmt.executeUpdate();
 
-            System.out.println("Produto inserido com sucesso!");
+            System.out.println("Categoria inserida com sucesso!");
 
         }
 
@@ -25,25 +24,26 @@ public class ProdutoDAO{
 }
     
     @SuppressWarnings("CallToPrintStackTrace")
-    public List<Produto> listar() {
+    public List<Categoria> listar() {
         
-        List<Produto> lista = new ArrayList<>();
-        String sql = "SELECT * FROM produtos";
+        List<Categoria> lista = new ArrayList<>();
+        String sql = "SELECT * FROM categorias";
 
         try (Connection conn = Conexao.conectar();
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql)){
         
-            if(Queries.contar("produtos") > 0){
+            if(Queries.contar("categorias") > 0){
                 while(rs.next()){
-                Produto p = new Produto(rs.getString("nome"), rs.getDouble("preco"));
+                    Categoria c = new Categoria(rs.getString("nome"), rs.getBoolean("ativo"));
 
-                p.setId(rs.getInt("id"));
-                lista.add(p);
-            }}
+                    c.setId(rs.getInt("id"));
+                    lista.add(c);
+                }
+            }
             else{
                 System.out.println(
-                    "Nenhum registro de produto foi encontrado!"
+                    "Nenhum registro de categoria foi encontrado!"
                 );
             }
 
@@ -58,19 +58,19 @@ public class ProdutoDAO{
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
-    public void atualizar(Produto p){
+    public void atualizar(Categoria c){
 
-        String sql = "UPDATE produtos SET nome=?, preco=? WHERE id =?";
+        String sql = "UPDATE categorias SET nome=?, ativo=? WHERE id =?";
 
         try (Connection conn = Conexao.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, p.getNome());
-            stmt.setDouble(2, p.getPreco());
-            stmt.setInt(3, p.getId());
+            stmt.setString(1, c.getNome());
+            stmt.setBoolean(2, c.getAtivo());
+            stmt.setInt(3, c.getId());
             stmt.executeUpdate();
 
-            System.out.println("Produto atualizado!");
+            System.out.println("Categoria atualizada!");
             
         }
 
@@ -80,17 +80,17 @@ public class ProdutoDAO{
 
     }
 
-        @SuppressWarnings("CallToPrintStackTrace")
+    @SuppressWarnings("CallToPrintStackTrace")
     public void deletar(int id){
 
-        String sql = "DELETE FROM produtos WHERE id=?";
+        String sql = "DELETE FROM categorias WHERE id=?";
 
         try (Connection conn = Conexao.conectar();
         PreparedStatement stmt = conn.prepareStatement(sql)){
         
             stmt.setInt(1, id);
             stmt.executeUpdate();
-            System.out.println("Produto " + id + " deletado!");
+            System.out.println("Categoria " + id + " deletada!");
 
         }
 
@@ -100,3 +100,4 @@ public class ProdutoDAO{
 
     }
 }
+
