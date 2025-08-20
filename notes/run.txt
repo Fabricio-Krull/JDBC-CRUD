@@ -1,0 +1,5 @@
+Para rodar o projeto, rode isso aqui no ./CRUD:
+    java -cp "bin;lib\mysql-connector-j-8.0.33.jar" Main
+
+Para compilar o projeto, rode isso aqui no ./CRUD:
+    javac -cp "lib\mysql-connector-j-8.0.33.jar" -d bin src\*.java 

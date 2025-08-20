@@ -1,0 +1,6 @@
+Siga as instruções contidas no arquivo disponibilizado no canal da sala;
+Crie uma tabela chamada "Categorias" (id, nome, ativo);
+Crie a classe modelo para Categoria;
+Crie a classe para as operações de banco de dados (CRUD) para Categoria;
+No arquivo Main.java execute CRUD para as duas tabelas;
+Ao final, salve o projeto no github e faça a entrega do link do repositório.
